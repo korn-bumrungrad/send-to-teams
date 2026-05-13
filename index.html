@@ -1,70 +1,43 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Send Message to Our Team</title>
   <meta charset="UTF-8">
-
-  <style>
-    body {
-      font-family: Arial;
-      max-width: 400px;
-      margin: 40px auto;
-    }
-    input, textarea, button {
-      width: 100%;
-      padding: 10px;
-      margin: 8px 0;
-      font-size: 16px;
-    }
-    button {
-      background: #4F6BED;
-      color: white;
-      border: none;
-      cursor: pointer;
-    }
-  </style>
+  <title>Send Message to Team</title>
 </head>
-<body>
 
-<h2>Contact Our Team</h2>
+<body style="font-family:Arial; max-width:400px; margin:40px auto">
 
-<input id="name" placeholder="Your name">
-<textarea id="message" rows="5" placeholder="Your message"></textarea>
+<h3>Contact Our Team</h3>
 
-<button onclick="sendToTeams()">Send to Team</button>
+<input id="name" placeholder="Your name" style="width:100%; padding:8px"><br><br>
+<textarea id="message" placeholder="Your message" rows="5" style="width:100%; padding:8px"></textarea><br><br>
+
+<button onclick="sendToTeams()">Send</button>
 
 <script>
+/* ✅ function MUST be global */
 function sendToTeams() {
-
   const name = document.getElementById("name").value;
-  const msg = document.getElementById("message").value;
+  const message = document.getElementById("message").value;
 
-  if (!name || !msg) {
+  if (!name || !message) {
     alert("Please fill in all fields");
     return;
   }
 
-  const webhookUrl =
-    "https://defaultd0da78d29a7d40818d00014d1fad64.bb.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/ea615974d283420b92405670f78bebfc/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=2zFknLq9TcFShOwN6I8MRWNREaCNvHTzhF5FgqDwTSE";
-
-
- const payload = {
-   📩 **New Bot Message from Nurse**
-👤 From: ${name}
-💬 Message: ${msg}`
-  };
-
-  fetch(webhookUrl, {
+  fetch("https://defaultd0da78d29a7d40818d00014d1fad64.bb.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/2e8de73df09d4c1dac1965912d15b3ed/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=k-IouKUHylTLKAsHRV8w-GUFqxvA3BcB5eKRIMmhYAML", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(payload)
+    body: JSON.stringify({
+      sender: name,
+      message: message
+    })
   })
-  .then(() => {
-    alert("Message sent successfully");
-    document.getElementById("name").value = "";
-    document.getElementById("message").value = "";
-  })
-  .catch(() => alert("Error sending message"));
+  .then(() => alert("Message sent"))
+  .catch(err => {
+    console.error(err);
+    alert("Error sending message");
+  });
 }
 </script>
 
