@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Send Message to Our Team</title>
+  <meta charset="UTF-8">
+
+  <style>
+    body {
+      font-family: Arial;
+      max-width: 400px;
+      margin: 40px auto;
+    }
+    input, textarea, button {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0;
+      font-size: 16px;
+    }
+    button {
+      background: #4F6BED;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+<h2>Contact Our Team</h2>
+
+<input id="name" placeholder="Your name">
+<textarea id="message" rows="5" placeholder="Your message"></textarea>
+
+<button onclick="sendToTeams()">Send to Team</button>
+
+<script>
+function sendToTeams() {
+
+  const name = document.getElementById("name").value;
+  const msg = document.getElementById("message").value;
+
+  if (!name || !msg) {
+    alert("Please fill in all fields");
+    return;
+  }
+
+  const webhookUrl =
+    "https://defaultd0da78d29a7d40818d00014d1fad64.bb.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/ea615974d283420b92405670f78bebfc/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=2zFknLq9TcFShOwN6I8MRWNREaCNvHTzhF5FgqDwTSE";
+
+
+ const payload = {
+   📩 **New Bot Message from Nurse**
+👤 From: ${name}
+💬 Message: ${msg}`
+  };
+
+  fetch(webhookUrl, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload)
+  })
+  .then(() => {
+    alert("Message sent successfully");
+    document.getElementById("name").value = "";
+    document.getElementById("message").value = "";
+  })
+  .catch(() => alert("Error sending message"));
+}
+</script>
+
+</body>
+</html>
