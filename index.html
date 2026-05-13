@@ -28,10 +28,11 @@ function sendToTeams() {
   fetch("https://defaultd0da78d29a7d40818d00014d1fad64.bb.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/2e8de73df09d4c1dac1965912d15b3ed/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=k-IouKUHylTLKAsHRV8w-GUFqxvA3BcB5eKRIMmhYAM", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      sender: name,
-      message: message
-    })
+    
+body: JSON.stringify({
+    text: `From: ${name}\nMessage: ${message}`
+  })
+
   })
   .then(() => alert("Message sent"))
   .catch(err => {
